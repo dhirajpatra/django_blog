@@ -1,0 +1,5 @@
+<!-- blog_list.html -->
+{% for post in posts %}
+    <h2><a href="{% url 'blog:blog_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+    <p>{{ post.pub_date|date:"F d, Y" }}</p>
+{% endfor %}
