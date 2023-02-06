@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Result from Elasticsearch</title>
+</head>
+<body>
+{% for post in results %}
+  <b>{{ post.title }}</b>
+{% endfor %}
+</body>
+</html>
