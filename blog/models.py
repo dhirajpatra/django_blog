@@ -9,9 +9,9 @@ class Post(models.Model):
         _('title'),
         max_length=200
     )
-    pub_date = models.DateField(
+    pub_date = models.DateTimeField(
         _('pub_date'),
-        default=timezone.now
+        auto_now_add=True
     )
     body = models.TextField(
         _('body'),
@@ -25,8 +25,10 @@ class Post(models.Model):
     #     return '{} - {}'.format(self.title, self.pub_date)
 
     class Meta:
+        app_label = 'blog'
         verbose_name = _('Post')
         verbose_name_plural = _('Posts')
+        get_latest_by = "pub_date"
 
 
 class Blog(models.Model):

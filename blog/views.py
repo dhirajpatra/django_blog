@@ -36,7 +36,12 @@ class BlogDetailView(DetailView):
     print_caller()
     model = Post
     template_name = 'blog/blog_detail.html'
-    context_object_name = 'posts'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        model_fields = [field.name for field in self.model._meta.get_fields()]
+        context['model_fields'] = model_fields
+        return context
 
 
 def search_view(request):
