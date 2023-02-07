@@ -12,9 +12,12 @@ On some READMEs, you may see small images that convey metadata, such as whether 
 
 
 ## Installation and Configure
+__install pip lib__
 `pip install -r requirements.txt`
 
 ### To install elasticsearch follow the steps with Docker
+<a href="https://levelup.gitconnected.com/how-to-run-elasticsearch-8-on-docker-for-local-development-401fd3fff829">How to install elastic search with Docker in local system</a>
+
 __to create network__
 `docker network create elastic`
 
