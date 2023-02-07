@@ -47,5 +47,5 @@ class BlogDetailView(DetailView):
 def search_view(request):
     print_caller()
     results = PostDocument.search().query("match", title="First Blog Post")
-    return render(request, 'blog/blog_list.html', {'results': results})
+    return render(request, 'blog/blog_search.html', {'results': results})
 

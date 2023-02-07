@@ -5,8 +5,11 @@
     <title>Search Result from Elasticsearch</title>
 </head>
 <body>
+<!--{{ results }}-->
 {% for post in results %}
-  <b>{{ post.title }}</b>
+  <br>{{ post.title }}</br>
 {% endfor %}
+</br>
+    <a href="/">Home</a>
 </body>
 </html>
