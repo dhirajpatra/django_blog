@@ -4,6 +4,24 @@ from django.views.generic.detail import DetailView
 from .utils import print_caller
 from .models import Post
 from .documents import PostDocument
+from .documents import PostDocumentSerializer
+from django_elasticsearch_dsl_drf.constants import (
+    LOOKUP_FILTER_RANGE,
+    LOOKUP_QUERY_GT,
+    LOOKUP_QUERY_GTE,
+    LOOKUP_QUERY_IN,
+    LOOKUP_QUERY_LT,
+    LOOKUP_QUERY_LTE,
+    SUGGESTER_COMPLETION,
+)
+from django_elasticsearch_dsl_drf.filter_backends import (
+    DefaultOrderingFilterBackend,
+    FacetedSearchFilterBackend,
+    FilteringFilterBackend,
+    SearchFilterBackend,
+    SuggesterFilterBackend,
+)
+from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 
 
 def home_view(request):
@@ -48,4 +66,48 @@ def search_view(request):
     print_caller()
     results = PostDocument.search().query("match", title="First Blog Post")
     return render(request, 'blog/blog_search.html', {'results': results})
+
+
+class PostViewSet(DocumentViewSet):
+    document = PostDocument
+    serializer_class = PostDocumentSerializer
+    ordering = ('id',)
+    lookup_field = 'id'
+
+    filter_backends = [
+        DefaultOrderingFilterBackend,
+        FacetedSearchFilterBackend,
+        FilteringFilterBackend,
+        SearchFilterBackend,
+        SuggesterFilterBackend,
+    ]
+
+    search_fields = (
+        'title',
+        'body',
+    )
+
+    filter_fields = {
+        'id': {
+            'field': 'id',
+            'lookups': [
+                LOOKUP_FILTER_RANGE,
+                LOOKUP_QUERY_IN,
+                LOOKUP_QUERY_GT,
+                LOOKUP_QUERY_GTE,
+                LOOKUP_QUERY_LT,
+                LOOKUP_QUERY_LTE,
+            ],
+        },
+        'title': 'title',
+    }
+
+    suggester_fields = {
+        'title_suggest': {
+            'field': 'title.suggest',
+            'suggesters': [
+                SUGGESTER_COMPLETION,
+            ],
+        },
+    }
 

@@ -4,15 +4,9 @@ from django_elasticsearch_dsl import (
     Index,
 )
 from django_elasticsearch_dsl.registries import registry
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from .models import Post
 
-
-# post_index = Index('posts')
-#
-# post_index.settings(
-#     number_of_shards=1,
-#     number_of_replicas=0
-# )
 
 @registry.register_document
 class PostDocument(Document):
@@ -67,3 +61,13 @@ class PostDocument(Document):
         # (by default it uses the database driver's default setting)
         # queryset_pagination = 5000
 
+
+class PostDocumentSerializer(DocumentSerializer):
+    class Meta:
+        document = PostDocument
+        fields = (
+            'id',
+            'title',
+            'pub_date',
+            'body',
+        )

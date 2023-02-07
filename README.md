@@ -49,6 +49,10 @@ Run the server: `python manage.py runserver`
 __to run a shell for this django application__
 From the root folder of the project run this command `python manage.py shell`
 
+### Some example to search
+http://localhost:8000/blog/?name\_\_wildcard=\*f\*
+
+
 ### If you want to install Kibana
 __to start the docker container for Kibana__
 
